@@ -1,4 +1,5 @@
 build/
 code/
 .idea/
+src/cmake-build-debug/
 .DS_Store
