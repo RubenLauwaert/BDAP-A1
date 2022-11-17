@@ -9,6 +9,7 @@
 
 #include <unordered_map> // std::hash for std::string_view
 #include "email.hpp"
+#include "murmurhash.hpp"
 
 namespace bdap {
 
@@ -68,9 +69,9 @@ public:
 
     static size_t hash(std::string_view key, size_t seed)
     {
-        // use std::hash implementation of std::unordered_map
-        size_t h = std::hash<std::string_view>{}(key);
-        return (1000003 * h) ^ seed;
+        uint64_t out[2] = {0};
+        MurmurHash3_x64_128(key.data(), key.size(), seed, &out);
+        return out[0] ^ out[1];
     }
 
     /* IMPLEMENT THESE METHODS IN YOUR SUBCLASSES */
