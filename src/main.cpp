@@ -53,11 +53,12 @@ std::vector<Email> load_emails(int seed)
 
     // Update these paths to your setup
     // Data can be found on the departmental computers in /cw/bdap/assignment1
-    load_emails(emails, "data/Enron.txt");
-    load_emails(emails, "data/SpamAssasin.txt");
-    load_emails(emails, "data/Trec2005.txt");
-    load_emails(emails, "data/Trec2006.txt");
-    load_emails(emails, "data/Trec2007.txt");
+
+    //load_emails(emails, "../../data/Enron.txt");
+    load_emails(emails, "../../data/SpamAssasin.txt");
+    //load_emails(emails, "../../data/Trec2005.txt");
+    //load_emails(emails, "../../data/Trec2006.txt");
+    //load_emails(emails, "../../data/Trec2007.txt");
 
     // Shuffle the emails
     std::default_random_engine g(seed);
@@ -125,7 +126,7 @@ int main(int argc, char *argv[])
     std::cout << "#emails: " << emails.size() << std::endl;
 
     Accuracy metric;
-    PerceptronFeatureHashing clf{9, 0.5};
+    NaiveBayesFeatureHashing clf{9, 0.5};
     clf.ngram_k = ngram_k;
     auto metric_values = stream_emails(emails, clf, metric, window);
 

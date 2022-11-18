@@ -29,6 +29,11 @@ public:
     void update_(const Email& email)
     {
         // TODO implement this
+
+        EmailIter iter = EmailIter(email, this->ngram_k);
+        while(!iter.is_done()){
+            std::cout << iter.next() << "\n";
+        }
     }
 
     double predict_(const Email& email) const
