@@ -55,7 +55,7 @@ std::vector<Email> load_emails(int seed)
     // Data can be found on the departmental computers in /cw/bdap/assignment1
 
     //load_emails(emails, "../../data/Enron.txt");
-    load_emails(emails, "../../data/SpamAssasin.txt");
+    load_emails(emails, "data/SpamAssasin.txt");
     //load_emails(emails, "../../data/Trec2005.txt");
     //load_emails(emails, "../../data/Trec2006.txt");
     //load_emails(emails, "../../data/Trec2007.txt");

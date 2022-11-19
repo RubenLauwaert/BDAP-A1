@@ -11,6 +11,7 @@ namespace bdap {
 
 class NaiveBayesFeatureHashing : public BaseClf<NaiveBayesFeatureHashing> {
     int log_num_buckets_;
+    int amt_buckets_;
     std::vector<int> buckets_;
 
     // TODO add fields here
@@ -20,6 +21,8 @@ class NaiveBayesFeatureHashing : public BaseClf<NaiveBayesFeatureHashing> {
 public:
     NaiveBayesFeatureHashing(int log_num_buckets, double threshold)
         : log_num_buckets_(log_num_buckets)
+        , amt_buckets_(std::pow(2,log_num_buckets_))
+        , buckets_(std::vector(amt_buckets_,1))
         , seed_(0x249cd)
     {
         // TODO initialize the data structures here
@@ -32,7 +35,13 @@ public:
 
         EmailIter iter = EmailIter(email, this->ngram_k);
         while(!iter.is_done()){
-            std::cout << iter.next() << "\n";
+            size_t index = this->hash(iter.next(),seed_) % amt_buckets_;
+            buckets_[index] = buckets_[index] + 1;
+            //std::cout << hash << "\n";
+            
+        }
+        for(int bucket : buckets_){
+            std::cout << bucket << "\n";
         }
     }
 
