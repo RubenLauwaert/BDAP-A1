@@ -142,8 +142,8 @@ int main(int argc, char *argv[])
     Email email1("EMAIL> label=1", "free try now");
     Email email2("EMAIL> label=1", "winner winner winner");
 
-    std::cout << "classify(email1) = " << clf.classify(email1) << std::endl;
-    std::cout << "classify(email2) = " << clf.classify(email2) << std::endl;
+    std::cout << "classify(email1) = " << clf.predict(email1) << std::endl;
+    std::cout << "classify(email2) = " << clf.predict(email2) << std::endl;
 
     return 0;
 }
