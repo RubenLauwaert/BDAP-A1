@@ -54,11 +54,11 @@ std::vector<Email> load_emails(int seed)
     // Update these paths to your setup
     // Data can be found on the departmental computers in /cw/bdap/assignment1
 
-    //load_emails(emails, "../../data/Enron.txt");
-    load_emails(emails, "data/SpamAssasin.txt");
-    //load_emails(emails, "../../data/Trec2005.txt");
-    //load_emails(emails, "../../data/Trec2006.txt");
-    //load_emails(emails, "../../data/Trec2007.txt");
+    load_emails(emails, "../../data/Enron.txt");
+    load_emails(emails, "../../data/SpamAssasin.txt");
+    load_emails(emails, "../../data/Trec2005.txt");
+    load_emails(emails, "../../data/Trec2006.txt");
+    load_emails(emails, "../../data/Trec2007.txt");
 
     // Shuffle the emails
     std::default_random_engine g(seed);
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
     std::cout << "#emails: " << emails.size() << std::endl;
 
     Accuracy metric;
-    NaiveBayesFeatureHashing clf{9, 0.5};
+    NaiveBayesFeatureHashing clf{12, 0.5};
     clf.ngram_k = ngram_k;
     auto metric_values = stream_emails(emails, clf, metric, window);
 
@@ -141,9 +141,11 @@ int main(int argc, char *argv[])
     // just for fun, evaluate a single email:
     Email email1("EMAIL> label=1", "free try now");
     Email email2("EMAIL> label=1", "winner winner winner");
+    Email email3("EMAIL> label=0", "likke likke likke likke");
 
     std::cout << "classify(email1) = " << clf.predict(email1) << std::endl;
     std::cout << "classify(email2) = " << clf.predict(email2) << std::endl;
+    std::cout << "classify(email3) = " << clf.predict(email3) << std::endl;
 
     return 0;
 }

@@ -10,7 +10,13 @@
 namespace bdap {
 
 class NaiveBayesCountMin : public BaseClf<NaiveBayesCountMin> {
-    // TODO add private fields here
+
+private:
+    std::vector<int> hashSeeds_;
+    int amt_buckets_;
+    std::map<int,std::vector<int>> bucketMatrixSpam_;
+    std::map<int,std::vector<int>> bucketMatrixHam_;
+
 
 public:
     // TODO initialize your fields in the constructor
