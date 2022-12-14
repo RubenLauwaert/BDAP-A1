@@ -56,9 +56,9 @@ std::vector<Email> load_emails(int seed)
 
     load_emails(emails, "../../data/Enron.txt");
     load_emails(emails, "../../data/SpamAssasin.txt");
-    load_emails(emails, "../../data/Trec2005.txt");
-    load_emails(emails, "../../data/Trec2006.txt");
-    load_emails(emails, "../../data/Trec2007.txt");
+    //load_emails(emails, "../../data/Trec2005.txt");
+    //load_emails(emails, "../../data/Trec2006.txt");
+    //load_emails(emails, "../../data/Trec2007.txt");
 
     // Shuffle the emails
     std::default_random_engine g(seed);
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
     std::cout << "#emails: " << emails.size() << std::endl;
 
     Accuracy metric;
-    NaiveBayesFeatureHashing clf{12, 0.5};
+    NaiveBayesCountMin clf{12, 12, 0.5};
     clf.ngram_k = ngram_k;
     auto metric_values = stream_emails(emails, clf, metric, window);
 
