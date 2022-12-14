@@ -5,4 +5,6 @@ code/
 src/cmake-build-debug/
 .DS_Store
 .vscode/
+.vs/
+CMakeSettings.json
 
