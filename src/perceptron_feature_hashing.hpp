@@ -29,13 +29,40 @@ public:
 
     void update_(const Email& email)
     {
-        // TODO implement this
+        EmailIter iter = EmailIter(email, this->ngram_k);
+        int o_d = transformTargetValue(this->classify(email));
+        int t_d = transformTargetValue(email.is_spam());
+        while(!iter.is_done()){
+            std::string_view n_gram = iter.next();
+            int bucketIndex = this->hash(n_gram,this->seed_) % (1 << log_num_buckets_);
+            // Calculate Delta w_i
+            double x_id = t_d;
+            double delta_w_i = learning_rate_ * (t_d - o_d) * x_id;
+            // Update weights
+            weights_[bucketIndex] += delta_w_i;
+        }
     }
 
     double predict_(const Email& email) const
     {
-        // TODO implement this
-        return 0.0;
+        double activationValue = 0;
+
+        EmailIter iter = EmailIter(email, this->ngram_k);
+        int targetValue = transformTargetValue(email.is_spam());
+        while(!iter.is_done()){
+            // Parse n_gram
+            std::string_view n_gram = iter.next();
+            int bucketIndex = this->hash(n_gram,this->seed_) % (1 << log_num_buckets_);
+            // Get weight corresponding to n_gram
+            double w_i = weights_[bucketIndex];
+
+            // Update Activation Value
+            activationValue += w_i * targetValue;
+
+        }
+
+
+        return activationValue - bias_;
     }
 
     void print_weights() const
@@ -49,13 +76,19 @@ public:
 
 private:
     size_t get_bucket(std::string_view ngram) const
-    { return get_bucket(hash(ngram, seed_)); }
+    { return get_bucket(hash(ngram, seed_) % (1 << log_num_buckets_)); }
 
     size_t get_bucket(size_t hash) const
     {
-        // TODO limit the range of the hash values here
         return hash;
     }
+
+    int transformTargetValue(bool isSpam) const{
+        int targetValue;
+        (isSpam) ? (targetValue = 1) : (targetValue = -1);
+        return targetValue;
+    }
+
 };
 
 } // namespace bdap

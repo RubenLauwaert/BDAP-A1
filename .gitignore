@@ -3,6 +3,7 @@ data/
 code/
 .idea/
 src/cmake-build-debug/
+cmake-build-debug/
 .DS_Store
 .vscode/
 .vs/

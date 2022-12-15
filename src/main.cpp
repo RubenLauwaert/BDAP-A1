@@ -56,9 +56,9 @@ std::vector<Email> load_emails(int seed)
 
     load_emails(emails, "../../data/Enron.txt");
     load_emails(emails, "../../data/SpamAssasin.txt");
-    //load_emails(emails, "../../data/Trec2005.txt");
-    //load_emails(emails, "../../data/Trec2006.txt");
-    //load_emails(emails, "../../data/Trec2007.txt");
+    load_emails(emails, "../../data/Trec2005.txt");
+    load_emails(emails, "../../data/Trec2006.txt");
+    load_emails(emails, "../../data/Trec2007.txt");
 
     // Shuffle the emails
     std::default_random_engine g(seed);
@@ -118,15 +118,27 @@ int main(int argc, char *argv[])
     }
 
     std::cout << "window:  " << window << std::endl;
-    std::cout << "ngram_k: " << window << std::endl;
+    std::cout << "ngram_k: " << ngram_k << std::endl;
     std::cout << "outfile: " << outfname << std::endl;
 
     int seed = 12;
     std::vector<Email> emails = load_emails(seed);
     std::cout << "#emails: " << emails.size() << std::endl;
 
-    Accuracy metric;
-    NaiveBayesCountMin clf{12, 12, 0.5};
+    // Evaluation Metrics
+
+    //Accuracy metric;
+    F1Score metric;
+
+    // Naive Bayes
+
+    //NaiveBayesCountMin clf{12, 12, 0.5};
+    //NaiveBayesFeatureHashing clf{12,0.5};
+
+    // Perceptron
+
+    PerceptronFeatureHashing clf{12,0.01};
+    //PerceptronCountMin clf{12,12,0.01};
     clf.ngram_k = ngram_k;
     auto metric_values = stream_emails(emails, clf, metric, window);
 

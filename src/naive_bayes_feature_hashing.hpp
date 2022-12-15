@@ -25,8 +25,8 @@ public:
     NaiveBayesFeatureHashing(int log_num_buckets, double threshold)
         : log_num_buckets_(log_num_buckets)
         , amt_buckets_(std::pow(2,log_num_buckets_))
-        , amt_ngrams_spam(0)
-        , amt_ngrams_ham(0)
+        , amt_ngrams_spam(std::pow(2,log_num_buckets_))
+        , amt_ngrams_ham(std::pow(2,log_num_buckets_))
         , buckets_spam_(std::vector(amt_buckets_,1))
         , buckets_ham_(std::vector<int>(amt_buckets_,1))
         , seed_(0x249cd)
@@ -66,7 +66,6 @@ public:
         }
         
         double average = (double) sum_vec / vec_p_spam_given_n_gram.size();
-        std::cout << average << '\n';
         return average;
         
     }
